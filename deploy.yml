@@ -36,6 +36,15 @@ spec:
       labels:
         app: nginx
     spec:
+      initContainers:
+        - name: copy-index
+          image: nginx
+          command: ["/bin/sh", "-c"]
+          args:
+            - cp /usr/share/nginx/html/index.html /mnt/data/nginx/index.html
+          volumeMounts:
+            - name: nginx-volume
+              mountPath: /mnt/data/nginx
       containers:
         - name: nginx
           image: nginx
